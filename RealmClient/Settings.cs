@@ -1,17 +1,18 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Text;
 
 namespace RealmClient;
 
 public static class Settings {
 	// Dictionary to store the settings and their values
 	private static Dictionary<string, object> settingsDict = new ();
-	private static string Filename = "Settings.txt";
+	private static string Filename = string.Empty;
 
 	static Settings() {
+	}
+
+	public static void Init(string path) {
+		Filename = Path.Combine(path, "Settings.txt");
+		LoadSettings();
 	}
 
 	// Method to add a new setting with a given value
