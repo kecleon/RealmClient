@@ -36,6 +36,7 @@ public class Web {
 		//todo: test server support
 		Client.BaseAddress = new Uri("https://www.realmofthemadgod.com/");
 		Client.Timeout = TimeSpan.FromMinutes(1);
+		LauncherMode();
 	}
 
 	public static void LauncherMode() {
@@ -60,26 +61,26 @@ public class Web {
 	public static void RunLauncherUrls(Account account) {
 		/*
 logged in
-https:www.realmofthemadgod.com/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv
-	game_net=Unity&play_platform=Unity&game_net_user_id=
-https:www.realmofthemadgod.com/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv
-	game_net=rotmg&game_net=Unity&play_platform=Unity&game_net_user_id=
 https://www.realmofthemadgod.com/account/verify
-	guid=email&password=pass&clientToken=clienttoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	guid=email&password=pass&clientToken=clienttoken&
 https://www.realmofthemadgod.com/build/toolsVersion
-	guid=email&platform=standaloneosxuniversal&clientToken=clienttoken&currentToken=accesstoken&accessToken=accesstoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	&
 https://www.realmofthemadgod.com/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv
-	accessToken=accesstoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	accessToken=accesstoken&
 https://www.realmofthemadgod.com/unityNews/getNews
-	accessToken=accesstoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	accessToken=accesstoken&
 https://www.realmofthemadgod.com/account/servers
-	accessToken=accesstoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	accessToken=accesstoken&
 https://www.realmofthemadgod.com/serverStatus/getServerStatus
-	accessToken=accesstoken&game_net=Unity&play_platform=Unity&game_net_user_id=
+	accessToken=accesstoken&
 		 */
+		var appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv");
+		//todo: figure out an easier way to write params, I want to call it like so: Load("path/example", {"game_net", "rotmg"}, {"asd", "fgh"}); 
+		appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv", new KeyValuePair<string, string>("game_net", "rotmg"));
+		var verify = Load("/account/verify", new KeyValuePair<string, string>("game_net", "rotmg"));
 	}
 
-	public static async Task<string> Load(string path, Dictionary<string,string> parameters)
+	public static async Task<string> Load(string path, params KeyValuePair<string, string>[] parameters)
 	{
 		// Create a POST request with the specified URI
 		HttpRequestMessage request = new(HttpMethod.Post, path);
@@ -88,7 +89,13 @@ https://www.realmofthemadgod.com/serverStatus/getServerStatus
 		StringBuilder sb = new();
 
 		// Loop through the parameters in the dictionary
-		foreach (KeyValuePair<string, string> parameter in parameters)
+		foreach (KeyValuePair<string, string> parameter in parameters) {
+			// Add the parameter to the string builder
+			sb.Append(parameter.Key + "=" + parameter.Value + "&");
+		}
+
+		//add default parameters
+		foreach (KeyValuePair<string, string> parameter in DefaultParameters)
 		{
 			// Add the parameter to the string builder
 			sb.Append(parameter.Key + "=" + parameter.Value + "&");
