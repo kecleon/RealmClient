@@ -8,10 +8,11 @@ public static class Settings {
 	private static string Filename = string.Empty;
 
 	static Settings() {
-	}
+		Filename = Path.Combine(Constants.ProfilePath, "settings.txt");
+		if (!File.Exists(Filename)) {
+			File.Create(Filename);
+		}
 
-	public static void Init(string path) {
-		Filename = Path.Combine(path, "Settings.txt");
 		LoadSettings();
 	}
 

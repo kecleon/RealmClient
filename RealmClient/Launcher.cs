@@ -1,14 +1,16 @@
-﻿using RealmClient.Util;
+﻿using RealmClient.Render;
+using RealmClient.Util;
 
 namespace RealmClient;
 
-public class RealmClient {
-	public static string ProfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "/RealmClient/");  
-
+public class Launcher {
 	public static void Main(string[] args) {
+		if (!Directory.Exists(Constants.ProfilePath)) {
+			Directory.CreateDirectory(Constants.ProfilePath);
+		}
+
 		Log.Info("Loading Realm Client");
 		Time.Update();
-		Settings.Init(ProfilePath);
-		Render.Graphics.Run();
+		Graphics.Run();
 	}
 }
