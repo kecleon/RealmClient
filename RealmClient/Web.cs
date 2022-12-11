@@ -58,32 +58,150 @@ public class Web {
 		}
 	}
 
-	public static void RunLauncherUrls(Account account) {
-		/*
-logged in
-https://www.realmofthemadgod.com/account/verify
-	guid=email&password=pass&clientToken=clienttoken&
-https://www.realmofthemadgod.com/build/toolsVersion
-	&
-https://www.realmofthemadgod.com/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv
-	accessToken=accesstoken&
-https://www.realmofthemadgod.com/unityNews/getNews
-	accessToken=accesstoken&
-https://www.realmofthemadgod.com/account/servers
-	accessToken=accesstoken&
-https://www.realmofthemadgod.com/serverStatus/getServerStatus
-	accessToken=accesstoken&
-		 */
-		var appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv");
-		//todo: figure out an easier way to write params, I want to call it like so: Load("path/example", {"game_net", "rotmg"}, {"asd", "fgh"}); 
-		appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv", new KeyValuePair<string, string>("game_net", "rotmg"));
-		var verify = Load("/account/verify", new KeyValuePair<string, string>("game_net", "rotmg"));
+	public static void LoadLauncherUrls(Account account) {
+		var appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv", EmptyParameters);
+		appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv", new Dictionary<string, string> {
+			{ "game_net", "rotmg" },
+		});
+		var verify = Load("/account/verify", new Dictionary<string, string> {
+			{ "guid", Uri.EscapeDataString(account.Guid) },
+			{ "password", Uri.EscapeDataString(account.Password) },
+			{ "clientToken", account.ClientToken },
+			{ "currentToken", Uri.EscapeDataString(account.AccessToken) },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		Load("/build/toolsVersion", new Dictionary<string, string> {
+			{ "guid", Uri.EscapeDataString(account.Guid) },
+			{ "platform", "standaloneosxuniversal" },
+			{ "clientToken", account.ClientToken },
+			{ "currentToken", Uri.EscapeDataString(account.AccessToken) },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		appInit = Load("/app/init?platform=standalonewindows64&key=9KnJFxtTvLu2frXv", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var news = Load("/unityNews/getNews", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var servers = Load("/account/servers", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var status = Load("/serverStatus/getServerStatus", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
 	}
 
-	public static async Task<string> Load(string path, params KeyValuePair<string, string>[] parameters)
+	public static void LoadLauncherPlayUrls(Account account) {
+		var verify = Load("/account/verify", new Dictionary<string, string> {
+			{ "guid", Uri.EscapeDataString(account.Guid) },
+			{ "clientToken", account.ClientToken },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var verifyAccessToken = Load("/account/verify", new Dictionary<string, string> {
+			{ "clientToken", account.ClientToken },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+	}
+
+	public static void LoadClientUrls(Account account) {
+		/*
+https://www.realmofthemadgod.com/app/init
+https://www.realmofthemadgod.com/account/verifyAccessTokenClient
+	clientToken=account.ClientToken
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/char/list
+	do_login=true
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/account/getOwnedPetSkins
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/supportCampaign/status
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/dungeonEvent/getClientEvents
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/shop/deals
+	language=en
+	version=0
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/season/info
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/leaderboards/getBoardActive
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/dailyLogin/fetchCalendar
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/account/list
+	type=0
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/friends/getRequests
+	targetName=
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/account/list
+	type=1
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/app/publicStaticData
+	dataType=powerUpSettings
+	version=0
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/account/listPowerUpStats
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+https://www.realmofthemadgod.com/app/publicStaticData
+	dataType=keyRefineSettings
+	version=0
+	accessToken=Uri.EscapeDataString(account.AccessToken)
+	game_net=Unity
+	play_platform=Unity
+	game_net_user_id=
+		 */
+	}
+
+	public static Dictionary<string, string> EmptyParameters = new();
+
+	public static async Task<string> Load(string path, Dictionary<string, string> parameters)
 	{
 		// Create a POST request with the specified URI
 		HttpRequestMessage request = new(HttpMethod.Post, path);
+		//server denies HEAD methods, would've been nice to skip loading useless things like unityNews
 
 		// Create a string builder to hold the parameters
 		StringBuilder sb = new();
