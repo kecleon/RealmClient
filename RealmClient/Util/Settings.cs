@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace RealmClient;
+namespace RealmClient.Util;
 
 public static class Settings {
 	// Dictionary to store the settings and their values

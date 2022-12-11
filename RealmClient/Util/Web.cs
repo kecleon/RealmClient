@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace RealmClient; 
+namespace RealmClient.Util; 
 
 public class Web {
 	private static HttpClient Client = new();

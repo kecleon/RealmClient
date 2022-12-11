@@ -1,4 +1,6 @@
-﻿namespace RealmClient;
+﻿using RealmClient.Util;
+
+namespace RealmClient;
 
 public class Account {
 	public string Guid;

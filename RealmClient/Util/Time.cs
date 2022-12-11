@@ -1,4 +1,4 @@
-﻿namespace RealmClient; 
+﻿namespace RealmClient.Util; 
 
 public static class Time {
 	public static long LastUpdate = -1;

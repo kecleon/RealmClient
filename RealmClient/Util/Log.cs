@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace RealmClient;
+namespace RealmClient.Util;
 
 public static class Log {
 	//lock for buffer

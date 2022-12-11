@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace RealmClient;
+namespace RealmClient.Util;
 
 public static class Extension {
 	public static byte[] Hash(this string input) {

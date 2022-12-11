@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
-using Silk.NET.Windowing;
+using RealmClient.Util;
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.OpenGL.Extensions.ImGui;
+using Silk.NET.Windowing;
 
-namespace RealmClient;
+namespace RealmClient.Render;
 
-public class Render {
+public static class Graphics {
 	public static void Run() {
 		using IWindow window = Window.Create(WindowOptions.Default);
 		window.Size = new Vector2D<int>(1280, 1024);
