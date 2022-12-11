@@ -104,95 +104,63 @@ public class Web {
 	}
 
 	public static void LoadClientUrls(Account account) {
-		/*
-https://www.realmofthemadgod.com/app/init
-https://www.realmofthemadgod.com/account/verifyAccessTokenClient
-	clientToken=account.ClientToken
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/char/list
-	do_login=true
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/account/getOwnedPetSkins
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/supportCampaign/status
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/dungeonEvent/getClientEvents
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/shop/deals
-	language=en
-	version=0
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/season/info
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/leaderboards/getBoardActive
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/dailyLogin/fetchCalendar
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/account/list
-	type=0
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/friends/getRequests
-	targetName=
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/account/list
-	type=1
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/app/publicStaticData
-	dataType=powerUpSettings
-	version=0
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/account/listPowerUpStats
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-https://www.realmofthemadgod.com/app/publicStaticData
-	dataType=keyRefineSettings
-	version=0
-	accessToken=Uri.EscapeDataString(account.AccessToken)
-	game_net=Unity
-	play_platform=Unity
-	game_net_user_id=
-		 */
+		var appInit = Load("/app/init", EmptyParameters);
+		var verifyAccessToken = Load("/account/verifyAccessTokenClient", new Dictionary<string, string> {
+			{ "clientToken", account.ClientToken },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var charList = Load("/char/list", new Dictionary<string, string> {
+			{ "do_login", "true" },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var ownedPetSkins = Load("/account/getOwnedPetSkins", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var campaignStatus = Load("/supportCampaign/status", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var dungeonEvents = Load("/dungeonEvent/getClientEvents", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var shopDeals = Load("/shop/deals", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var seasonInfo = Load("/season/info", new Dictionary<string, string> {
+			{ "language", "en" },
+			{ "version", "0" },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var activeLeaderboard = Load("/leaderboards/getBoardActive", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var dailyLoginCalendar = Load("/dailyLogin/fetchCalendar", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var accountList0 = Load("/account/list", new Dictionary<string, string> {
+			{ "type", "0" }, //todo: account list constants
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var friendRequests = Load("/friends/getRequests", new Dictionary<string, string> {
+			{ "targetName", "" },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var accountList1 = Load("/account/list", new Dictionary<string, string> {
+			{ "type", "1" }, //todo: account list constants
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var publicStatDataPowerUp = Load("/app/publicStaticData", new Dictionary<string, string> {
+			{ "dataType", "powerUpSettings" },
+			{ "version", "0" },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var powerUpStats = Load("/account/listPowerUpStats", new Dictionary<string, string> {
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
+		var publicStatDataKeyRefine = Load("/app/publicStaticData", new Dictionary<string, string> {
+			{ "dataType", "keyRefineSettings" },
+			{ "version", "0" },
+			{ "accessToken", Uri.EscapeDataString(account.AccessToken) },
+		});
 	}
 
 	public static Dictionary<string, string> EmptyParameters = new();
