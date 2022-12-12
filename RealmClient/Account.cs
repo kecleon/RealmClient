@@ -33,9 +33,13 @@ public class Account {
 		ClientToken = Guid.Hash().ToHexString();
 	}
 
-	public void Load(string path) {
-		var parameters = new Dictionary<string, string>();
-		parameters.Add("accessToken", Uri.EscapeDataString(AccessToken));
-		Web.Load(path, parameters);
+	public Account(string guid, string password, string secret) {
+		Guid = guid;
+		Password = password;
+		Secret = secret;
+		Steam = true;
+		ClientToken = Guid.Hash().ToHexString();
+	}
+
 	}
 }
