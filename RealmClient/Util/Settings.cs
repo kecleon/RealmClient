@@ -17,9 +17,11 @@ public static class Settings {
 	}
 
 	// Method to add a new setting with a given value
-	public static void AddSetting(string name, object value) {
+	public static void AddOrUpdateSetting(string name, object value) {
 		if (!settingsDict.ContainsKey(name)) {
 			settingsDict.Add(name, value);
+		} else {
+			settingsDict[name] = value;
 		}
 	}
 
@@ -31,11 +33,13 @@ public static class Settings {
 	}
 
 	// Method to retrieve the value of a setting
-	public static object GetSetting(string name) {
+	public static bool GetSetting(string name, out object value) {
 		if (settingsDict.ContainsKey(name)) {
-			return settingsDict[name];
+			value = settingsDict[name];
+			return true;
 		} else {
-			return null;
+			value = null;
+			return false;
 		}
 	}
 
