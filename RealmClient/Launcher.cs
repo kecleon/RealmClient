@@ -13,7 +13,6 @@ public class Launcher {
 		Time.Update();
 		Account account = new();
 		Client client = new(account);
-		account.AccountVerify();
 		account.LoadLauncherUrls();
 		account.LoadLauncherPlayUrls();
 		account.LoadClientUrls();

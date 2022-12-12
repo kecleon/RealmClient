@@ -1,4 +1,4 @@
-﻿namespace RealmClient.Xml; 
+﻿namespace RealmClient.AppEngineJson; 
 
 public class LeaderboardActive
 {
