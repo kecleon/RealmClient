@@ -2,6 +2,8 @@
 using AssetStudio;
 using RealmClient.Sounds;
 using RealmClient.Util;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using Object = AssetStudio.Object;
 
 namespace RealmClient.Data;
@@ -57,7 +59,7 @@ public static class Unity {
 		return files.ToArray();
 	}
 
-	public static void ReadDataAssets((NamedObject, string)[] files) {
+	private static void ReadDataAssets((NamedObject, string)[] files) {
 		foreach ((NamedObject file, string container) in files) {
 			if (file is TextAsset text) {
 				HandleTextAsset(text, container);
@@ -93,9 +95,8 @@ public static class Unity {
 				break;
 		}
 
-		void SaveBytes(ref byte[] output) {
-			output = new byte[texture.image_data.Size];
-			texture.image_data.GetData(output);
+		void SaveBytes(ref Image<Bgra32> output) {
+			output = Texture2DConverter.ConvertTextureToImage(texture, true);
 		}
 	}
 

@@ -1,9 +1,12 @@
-﻿namespace RealmClient.Data; 
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+
+namespace RealmClient.Data; 
 
 public static class Textures {
 	public static string SpritesheetJson;
-	public static byte[] Characters;
-	public static byte[] CharactersMask;
-	public static byte[] MapObjects;
-	public static byte[] GroundTiles;
+	public static Image<Bgra32> Characters;
+	public static Image<Bgra32> CharactersMask;
+	public static Image<Bgra32> MapObjects;
+	public static Image<Bgra32> GroundTiles;
 }
