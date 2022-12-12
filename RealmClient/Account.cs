@@ -1,3 +1,4 @@
+﻿using System.Xml.Serialization;
 using RealmClient.Util;
 
 namespace RealmClient;
@@ -145,5 +146,10 @@ public class Account {
 			{ "accessToken", Uri.EscapeDataString(AccessToken) },
 		});
 	}
+
+	public void ParseAccountVerify(string xml) {
+		XmlSerializer serializer = new XmlSerializer(typeof(Account));
+		using StringReader reader = new StringReader(xml);
+		var test = (Account)serializer.Deserialize(reader);
 	}
 }
