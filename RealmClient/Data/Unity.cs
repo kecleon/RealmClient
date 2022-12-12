@@ -10,7 +10,24 @@ public static class Unity {
 			Log.Info($"Please install RotMG to {Constants.RealmPath}");
 			return false;
 		}
-
+		AssetsManager manager = new();
+		manager.LoadFolder(Constants.RealmPath);
+		//bool sprites = ReadSpriteAssets(manager);
+		bool text = ReadXmlAssets(manager);
+		return false && text;
+	}
+	public static bool ReadContainers(AssetsManager manager) {
+		foreach (SerializedFile set in manager.assetsFileList) {
+			foreach (AssetStudio.Object file in set.Objects) {
+				if (file is TextAsset text) {
+					if (filenames.Contains(text.m_Name)) {
+						Console.WriteLine(text.m_Name);
+					}
+				}
+			}
+		}
+	}
+	public static bool ReadSpriteAssets(AssetsManager manager) {
 		string spritesheetJson = string.Empty;
 		Dictionary<string, byte[]> spritesheets = new() {
 			{ "characters", new byte[0] },
@@ -18,9 +35,6 @@ public static class Unity {
 			{ "mapObjects", new byte[0] },
 			{ "groundTiles", new byte[0] },
 		};
-
-		AssetsManager manager = new();
-		manager.LoadFolder(Constants.RealmPath);
 
 		foreach (SerializedFile set in manager.assetsFileList) {
 			foreach (AssetStudio.Object file in set.Objects) {
@@ -34,5 +48,19 @@ public static class Unity {
 		}
 
 		return spritesheetJson.Length != 0 && spritesheets.Values.All(bytes => bytes.Length != 0);
+	}
+	
+	public static bool ReadXmlAssets(AssetsManager manager, IEnumerable<string> filenames) {
+		foreach (SerializedFile set in manager.assetsFileList) {
+			foreach (AssetStudio.Object file in set.Objects) {
+				if (file is TextAsset text) {
+					if (filenames.Contains(text.m_Name)) {
+						Console.WriteLine(text.m_Name);
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 }
