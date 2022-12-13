@@ -2,13 +2,17 @@
 
 namespace RealmClient.Util;
 
-public static class Settings {
-	// Dictionary to store the settings and their values
-	private static Dictionary<string, object> settingsDict = new ();
-	private static string Filename = string.Empty;
+public class Settings : IDisposable {
+	public static Settings ClientSettings;
+	//todo: encrypt? no real way to encrypt in any meaningful way because we'll have to decrypt it and send the raw credentials to deca... if only their token system made sense...
+	public static Settings AccountSettings;
 
-	static Settings() {
-		Filename = Path.Combine(Constants.ProfilePath, "settings.txt");
+	// Dictionary to store the settings and their values
+	private Dictionary<string, object> SettingsDict = new();
+	private string Filename;
+
+	public Settings(string name) {
+		Filename = Path.Combine(Constants.ProfilePath, $"{name}.txt");
 		if (!File.Exists(Filename)) {
 			File.Create(Filename);
 		}
@@ -17,25 +21,25 @@ public static class Settings {
 	}
 
 	// Method to add a new setting with a given value
-	public static void AddOrUpdateSetting(string name, object value) {
-		if (!settingsDict.ContainsKey(name)) {
-			settingsDict.Add(name, value);
+	public void AddOrUpdateSetting(string name, object value) {
+		if (!SettingsDict.ContainsKey(name)) {
+			SettingsDict.Add(name, value);
 		} else {
-			settingsDict[name] = value;
+			SettingsDict[name] = value;
 		}
 	}
 
 	// Method to remove a setting
-	public static void RemoveSetting(string name) {
-		if (settingsDict.ContainsKey(name)) {
-			settingsDict.Remove(name);
+	public void RemoveSetting(string name) {
+		if (SettingsDict.ContainsKey(name)) {
+			SettingsDict.Remove(name);
 		}
 	}
 
 	// Method to retrieve the value of a setting
-	public static bool GetSetting(string name, out object value) {
-		if (settingsDict.ContainsKey(name)) {
-			value = settingsDict[name];
+	public bool GetSetting(string name, out object value) {
+		if (SettingsDict.ContainsKey(name)) {
+			value = SettingsDict[name];
 			return true;
 		} else {
 			value = null;
@@ -44,7 +48,7 @@ public static class Settings {
 	}
 
 	// Method to load the settings from a file
-	public static void LoadSettings() {
+	public void LoadSettings() {
 		// Check if the file exists
 		if (File.Exists(Filename)) {
 			// Read the file into a string
@@ -61,24 +65,28 @@ public static class Settings {
 				// Check if the setting name and value are valid
 				if (settingPair.Length == 2 && !string.IsNullOrEmpty(settingPair[0]) && !string.IsNullOrEmpty(settingPair[1])) {
 					// Add the setting to the dictionary
-					settingsDict.Add(settingPair[0], settingPair[1]);
+					SettingsDict.Add(settingPair[0], settingPair[1]);
 				}
 			}
 		}
 	}
 
 	// Method to save the settings to a file
-	public static void SaveSettings() {
+	public void SaveSettings() {
 		// Create a string builder to hold the settings
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new();
 
 		// Loop through the settings in the dictionary
-		foreach (KeyValuePair<string, object> setting in settingsDict) {
+		foreach (KeyValuePair<string, object> setting in SettingsDict) {
 			// Add the setting name and value to the string builder
 			sb.Append(setting.Key + ":" + setting.Value + ",");
 		}
 
 		// Write the string builder to the file
 		File.WriteAllText(Filename, sb.ToString());
+	}
+	public void Dispose() {
+		SaveSettings();
+		SettingsDict.Clear();
 	}
 }

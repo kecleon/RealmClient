@@ -12,12 +12,16 @@ public class Launcher {
 
 		Log.Info("Loading Realm Client");
 		Time.Update();
-		Account account = new();
-		Client client = new(account);
 		if (!Unity.ReadAssets()) {
 			Log.Info($"Failed parsing assets properly, client unable to function");
 			//start lite gui? or exit? gui with just warning?
 		}
+
+		Settings.ClientSettings = new Settings("ClientSettings");
+		Settings.AccountSettings = new Settings("Account");
+		Settings.AccountSettings.SaveSettings();
+		Account account = new();
+		Client client = new(account);
 		account.LoadLauncherUrls();
 		account.LoadLauncherPlayUrls();
 		account.LoadClientUrls();

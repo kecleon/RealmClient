@@ -14,12 +14,12 @@ public class Account {
 	public bool Steam;
 
 	public Account() {
-		if (Settings.GetSetting("Secret", out object secret)) {
+		if (Settings.AccountSettings.GetSetting("Secret", out object secret)) {
 			Secret = (string)secret;
 			Steam = true;
 		}
 
-		if (Settings.GetSetting("GUID", out object guid) && Settings.GetSetting("Password", out object password)) {
+		if (Settings.AccountSettings.GetSetting("GUID", out object guid) && Settings.AccountSettings.GetSetting("Password", out object password)) {
 			Guid = (string)guid;
 			Password = (string)password;
 			ClientToken = Guid.Hash().ToHexString();

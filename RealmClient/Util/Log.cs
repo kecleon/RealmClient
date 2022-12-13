@@ -7,7 +7,12 @@ public static class Log {
 	private const string DefaultLogFilename = "log-{0}.txt";
 
 	static Log() {
-		LogFile = new FileStream(Path.Combine(Constants.ProfilePath, string.Format(DefaultLogFilename, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"))), FileMode.CreateNew);
+		string path = Path.Combine(Constants.ProfilePath, "Logs\\");
+		if (!Directory.Exists(path)) {
+			Directory.CreateDirectory(path);
+		}
+
+		LogFile = new FileStream(path + string.Format(DefaultLogFilename, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")), FileMode.CreateNew);
 		LogStream = new StreamWriter(LogFile);
 	}
 

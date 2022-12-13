@@ -52,7 +52,8 @@ public static class Graphics {
 
 		// The closing function
 		window.Closing += () => {
-			Settings.SaveSettings();
+			Settings.ClientSettings.Dispose();
+			Settings.AccountSettings.Dispose();
 			imgui?.Dispose();
 			input?.Dispose();
 			gl?.Dispose();
