@@ -1,4 +1,4 @@
-using RealmClient.Data;
+using RealmClient.Assets;
 using RealmClient.Render;
 using RealmClient.Util;
 
@@ -20,6 +20,7 @@ public class Launcher {
 		Settings.ClientSettings = new Settings("ClientSettings");
 		Settings.AccountSettings = new Settings("Account");
 		Settings.AccountSettings.SaveSettings();
+		XmlData.ParseXmls();
 		Account account = new();
 		Client client = new(account);
 		account.LoadLauncherUrls();

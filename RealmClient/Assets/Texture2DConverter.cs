@@ -3,7 +3,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace RealmClient.Data;
+namespace RealmClient.Assets;
 
 //ripped and isolated pieces of AssetStudio's Texture2DConverter
 public class Texture2DConverter {

@@ -1,4 +1,4 @@
-﻿namespace RealmClient.Data;
+﻿namespace RealmClient.Assets;
 
 public class SpritesheetJson {
 	public List<Sprite> sprites { get; set; }

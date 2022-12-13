@@ -6,7 +6,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using Object = AssetStudio.Object;
 
-namespace RealmClient.Data;
+namespace RealmClient.Assets;
 
 public static class Unity {
 	public static bool ReadAssets() {

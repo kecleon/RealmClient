@@ -1,4 +1,4 @@
-﻿namespace RealmClient.Data; 
+﻿namespace RealmClient.Assets; 
 
 public class Texture {
 	public string File;

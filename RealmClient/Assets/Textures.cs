@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
+using RealmClient.Structures;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace RealmClient.Data; 
+namespace RealmClient.Assets; 
 
 public static class Textures {
 	public enum AtlasId {
@@ -103,10 +104,6 @@ public static class Textures {
 					}
 				}
 			}
-		}
-
-		foreach (var go in GameObjects.Objects) {
-			
 		}
 	}
 }

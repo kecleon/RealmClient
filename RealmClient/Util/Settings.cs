@@ -4,8 +4,7 @@ namespace RealmClient.Util;
 
 public class Settings : IDisposable {
 	public static Settings ClientSettings;
-	//todo: encrypt? no real way to encrypt in any meaningful way because we'll have to decrypt it and send the raw credentials to deca... if only their token system made sense...
-	public static Settings AccountSettings;
+	public static Settings AccountSettings; //todo: encrypt? no real way to encrypt in any meaningful way because we'll have to decrypt it and send the raw credentials to deca... if only their token system made sense...
 
 	// Dictionary to store the settings and their values
 	private Dictionary<string, object> SettingsDict = new();

@@ -46,4 +46,22 @@ public static class Extension {
 		// Return the resulting byte array
 		return bytes;
 	}
+
+	public static string Before(this string full, string partial, bool last = false) {
+		var index = last ? full.LastIndexOf(partial) : full.IndexOf(partial);
+		if (index == -1) {
+			return full;
+		}
+
+		return full.Substring(0, index);
+	}
+
+	public static string After(this string full, string partial, bool last = false) {
+		var index = last ? full.LastIndexOf(partial) : full.IndexOf(partial);
+		if (index == -1) {
+			return full;
+		}
+
+		return full.Substring(index + partial.Length);
+	}
 }
