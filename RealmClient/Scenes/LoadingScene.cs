@@ -12,11 +12,9 @@ public class LoadingScene : Scene {
 	public override void Render(GL gl, IWindow window, Vector2 size) {
 		Graphics.ImGuiMainWindow(size, 100);
 		ImGui.Begin("RotMG Loading", Graphics.Flags);
-		var text = Log.CurrentStatus;
-		var windowWidth = ImGui.GetWindowWidth();
-		var textWidth = ImGui.CalcTextSize(text).X;
+		var text = Log.GetStatus();
+		Graphics.CenterHorizontal(text);
 		var windowHeight = ImGui.GetWindowHeight();
-		ImGui.SetCursorPosX((windowWidth - textWidth) * 0.5f);
 		ImGui.SetCursorPosY(windowHeight * 0.25f);
 		ImGui.Text(text);
 		ImGui.End();

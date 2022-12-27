@@ -197,3 +197,90 @@ public class Manifest {
 	public String version;
 }
 
+[XmlRoot(ElementName="Setpiece")]
+public class Setpiece {
+	[XmlAttribute(AttributeName="slot")]
+	public string Slot;
+	[XmlAttribute(AttributeName="itemtype")]
+	public string Itemtype;
+	[XmlText]
+	public string Text;
+}
+
+[XmlRoot(ElementName="ActivateOnEquipAll")]
+public class ActivateOnEquipAll {
+	[XmlAttribute(AttributeName="skinType")]
+	public string SkinType;
+	[XmlAttribute(AttributeName="size")]
+	public string Size;
+	[XmlAttribute(AttributeName="color")]
+	public string Color;
+	[XmlAttribute(AttributeName="bulletType")]
+	public string BulletType;
+	[XmlText]
+	public string Text;
+	[XmlAttribute(AttributeName="stat")]
+	public string Stat;
+	[XmlAttribute(AttributeName="amount")]
+	public string Amount;
+}
+
+[XmlRoot(ElementName="ActivateOnEquip3")]
+public class ActivateOnEquip3 {
+	[XmlAttribute(AttributeName="stat")]
+	public string Stat;
+	[XmlAttribute(AttributeName="amount")]
+	public string Amount;
+	[XmlText]
+	public string Text;
+}
+
+[XmlRoot(ElementName="ActivateOnEquip2")]
+public class ActivateOnEquip2 {
+	[XmlAttribute(AttributeName="stat")]
+	public string Stat;
+	[XmlAttribute(AttributeName="amount")]
+	public string Amount;
+	[XmlText]
+	public string Text;
+}
+
+[XmlRoot(ElementName="EquipmentSet")]
+public class EquipmentSet {
+	[XmlElement(ElementName="Setpiece")]
+	public List<Setpiece> Setpiece;
+	[XmlElement(ElementName="ActivateOnEquipAll")]
+	public List<ActivateOnEquipAll> ActivateOnEquipAll;
+	[XmlElement(ElementName="ActivateOnEquip3")]
+	public List<ActivateOnEquip3> ActivateOnEquip3;
+	[XmlElement(ElementName="ActivateOnEquip2")]
+	public List<ActivateOnEquip2> ActivateOnEquip2;
+	[XmlAttribute(AttributeName="type")]
+	public string Type;
+	[XmlAttribute(AttributeName="id")]
+	public string Id;
+	[XmlElement(ElementName="ActivateOnEquipCustom")]
+	public List<ActivateOnEquipCustom> ActivateOnEquipCustom;
+}
+
+[XmlRoot(ElementName="ActivateOnEquipCustom")]
+public class ActivateOnEquipCustom {
+	[XmlAttribute(AttributeName="skinType")]
+	public string SkinType;
+	[XmlAttribute(AttributeName="size")]
+	public string Size;
+	[XmlAttribute(AttributeName="color")]
+	public string Color;
+	[XmlAttribute(AttributeName="bulletType")]
+	public string BulletType;
+	[XmlAttribute(AttributeName="requiredItems")]
+	public string RequiredItems;
+	[XmlText]
+	public string Text;
+}
+
+[XmlRoot(ElementName="EquipmentSets")]
+public class EquipmentSets {
+	[XmlElement(ElementName="EquipmentSet")]
+	public List<EquipmentSet> EquipmentSet;
+}

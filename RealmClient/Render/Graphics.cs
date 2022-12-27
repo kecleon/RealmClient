@@ -148,7 +148,9 @@ public static class Graphics {
 		ImGui.SetNextWindowSize(size);
 	}
 
-	public static void ImGuiThing() {
-		
+	public static void CenterHorizontal(string text) {
+		var windowWidth = ImGui.GetWindowWidth();
+		var textWidth = ImGui.CalcTextSize(text).X;
+		ImGui.SetCursorPosX((windowWidth - textWidth) * 0.5f);
 	}
 }

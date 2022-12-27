@@ -7,6 +7,7 @@ namespace RealmClient.Util;
 public class Web {
 	private static HttpClient Client = new();
 
+	public static Dictionary<string, string> EmptyParameters = new();
 	private static Dictionary<string, string> DefaultParameters = new() {
 		{ "game_net", "Unity" },
 		{ "play_platform", "Unity" },
@@ -57,37 +58,32 @@ public class Web {
 		}
 	}
 
-	public static Dictionary<string, string> EmptyParameters = new();
-
-	public static async Task<string> Load(string path, Dictionary<string, string> parameters)
-	{
-		// Create a POST request with the specified URI
-		HttpRequestMessage request = new(HttpMethod.Post, path);
+	public static async Task<string> Load(string path, Dictionary<string, string> parameters) {
+		var requestParameters = new Dictionary<string, string>();
+		var request = new HttpRequestMessage(HttpMethod.Post, path);
 
 		//use form url encoded content type, because HttpClient doesn't let you manually specify the Content-Type header
 		foreach (KeyValuePair<string, string> parameter in DefaultParameters) {
-			parameters.Add(parameter.Key, parameter.Value);
+			requestParameters.Add(parameter.Key, parameter.Value);
 		}
 
-		request.Content = new FormUrlEncodedContent(parameters);
+		foreach (var parameter in parameters) {
+			requestParameters.Add(parameter.Key, parameter.Value);
+		}
+
+		request.Content = new FormUrlEncodedContent(requestParameters);
+		Console.WriteLine(path + request.Content);
 
 		// Send the request to the server
-		HttpResponseMessage response = await Client.SendAsync(request);
+		var response = await Client.SendAsync(request);
 
 		// Check if the request was successful
-		if (response.IsSuccessStatusCode)
-		{
+		if (response.IsSuccessStatusCode) {
 			// Log the response content
 			string result = await response.Content.ReadAsStringAsync();
-			Console.WriteLine("Response content: " + result);
+			//Console.WriteLine("Response content: " + result);
 			return result;
 		}
-		else
-		{
-			Console.WriteLine("POST request failed");
-		}
-		
-		//todo: some timeouts here
 
 		return String.Empty;
 	}

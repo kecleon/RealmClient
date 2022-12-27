@@ -1,5 +1,10 @@
-﻿namespace RealmClient.Structures; 
+﻿using RealmClient.Assets;
 
-public class SetLibrary {
-	
+namespace RealmClient.Structures; 
+
+public static class SetLibrary {
+	public static Dictionary<int, EquipmentSet> Sets = new();
+	public static void Parse(string xml) {
+		
+	}
 }

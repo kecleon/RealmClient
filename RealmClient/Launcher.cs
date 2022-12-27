@@ -9,6 +9,7 @@ namespace RealmClient;
 public class Launcher {
 	public static Scene Scene = new DemoScene();
 	public static Thread RenderThread;
+	public static Client Client;
 	
 	public static unsafe void Main(string[] args) {
 		if (!Directory.Exists(Constants.ProfilePath)) {
@@ -37,13 +38,21 @@ public class Launcher {
 		Settings.AccountSettings.SaveSettings();
 		Log.Status("Parsing XMLs");
 		XmlData.ParseXmls();
-		
-		Account account = new();
-		Client client = new(account);
-		File.WriteAllText("sheet.json", Textures.SpritesheetJson);
-		account.LoadLauncherUrls();
-		account.LoadLauncherPlayUrls();
-		account.LoadClientUrls();
-		Graphics.RunDemo();
+
+		Account.LoadLauncheBaseUrls();
+		var account = Account.AccountFromSettings();
+		if (account is not null) {
+			if (account.TryLauncherLogin()) {
+				account.LoadLauncherAccountUrls();
+			}
+
+			Graphics.Scene = new MainScene();
+			account.LoadLauncherPlayUrls();
+			account.LoadClientUrls();
+		} else {
+			Graphics.Scene = new LoginScene();
+		}
+
+		Client = new(account);
 	}
 }

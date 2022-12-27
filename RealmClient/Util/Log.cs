@@ -1,7 +1,8 @@
 ﻿namespace RealmClient.Util;
 
 public static class Log {
-	public static string CurrentStatus = "Initializing";
+	private static string StatusLog = "Initializing";
+	private static DateTime StatusSetAt = DateTime.Now;
 	private static FileStream LogFile;
 	private static StreamWriter LogStream;
 
@@ -28,6 +29,12 @@ public static class Log {
 	}
 
 	public static void Status(string message) {
-		CurrentStatus = message;
+		StatusLog = message;
+		StatusSetAt = DateTime.Now;
+	}
+
+	public static string GetStatus() {
+		int ms = (int)DateTime.Now.Subtract(StatusSetAt).TotalMilliseconds;
+		return $"{StatusLog} ({ms})";
 	}
 }

@@ -15,54 +15,33 @@ public static class XmlData {
 			return false;
 		}
 
+		SaveXmls();
+
 		string manifestXml = RawXmls[manifestPath];
 
 		Log.Status("Parsing Manifest");
 		XmlSerializer serializer = new(typeof(Manifest));
 		using StringReader reader = new(manifestXml);
-		Manifest manifest = (Manifest)serializer.Deserialize(reader);
-		const string xmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-		foreach (ObjectsLibrary library in manifest.ObjectsLibrary) {
-			Console.WriteLine(library.path);
+		//Manifest manifest = (Manifest)serializer.Deserialize(reader);
+		const string xmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
+		foreach (var pair in RawXmls) {
+			var xml = RawXmls[pair.Key].After(xmlHeader);
+			if (xml.StartsWith("<Objects>")) {
+				Log.Status($"Parsing objects {pair.Key}");
+				ObjectLibrary.Parse(xml);
+			} else if (xml.StartsWith("<GroundTypes>")) {
+				Log.Status($"Parsing tiles {pair.Key}");
+				TileLibrary.Parse(xml);
+			}
 		}
-
-		Console.WriteLine("___");
-
-		foreach (var thing in RawXmls) {
-			Console.WriteLine($"{thing.Key}");
-		}
-
-		foreach (ObjectsLibrary library in manifest.ObjectsLibrary) {
-			var path = $"xml/{library.path}";
-			Log.Status($"Library {path}");
-			
-			string xml = RawXmls[path];
-			ObjectLibrary.Parse(xml);
-			var trimmed = xml.After(xmlHeader).After("<Objects>").Before("</Objects>", true);
-			sb.AppendLine(trimmed);
-		}
-
-		sb.AppendLine("</Objects>");
-		File.WriteAllText("objectsmerged.xml", sb.ToString());
-		sb.Clear();
-		sb.AppendLine(xmlHeader);
-		sb.AppendLine("<GroundTypes>");
-
-		foreach (TilesLibrary library in manifest.TilesLibrary) {
-			string xml = RawXmls[library.path];
-			TileLibrary.Parse(xml);
-			var trimmed = xml.After(xmlHeader).After("<GroundTypes>").Before("</GroundTypes>", true);
-			sb.AppendLine(trimmed);
-		}
-
-		sb.AppendLine("</GroundTypes>");
-		File.WriteAllText("tilesmerged.xml", sb.ToString());
+		
+		Log.Status("Finished parsing assets");
 
 		return true;
 	}
 
 	public static void SaveXmls() {
-		foreach (var xml in XmlData.RawXmls) {
+		foreach (var xml in RawXmls) {
 			var name = xml.Key + ".xml";
 			var path = Path.GetDirectoryName(name);
 			if (!Directory.Exists(path)) {
