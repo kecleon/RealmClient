@@ -17,15 +17,26 @@ public static class XmlData {
 
 		string manifestXml = RawXmls[manifestPath];
 
+		Log.Status("Parsing Manifest");
 		XmlSerializer serializer = new(typeof(Manifest));
 		using StringReader reader = new(manifestXml);
 		Manifest manifest = (Manifest)serializer.Deserialize(reader);
 		const string xmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-		StringBuilder sb = new();
-		sb.AppendLine(xmlHeader);
-		sb.AppendLine("<Objects>");
 		foreach (ObjectsLibrary library in manifest.ObjectsLibrary) {
-			string xml = RawXmls[library.path];
+			Console.WriteLine(library.path);
+		}
+
+		Console.WriteLine("___");
+
+		foreach (var thing in RawXmls) {
+			Console.WriteLine($"{thing.Key}");
+		}
+
+		foreach (ObjectsLibrary library in manifest.ObjectsLibrary) {
+			var path = $"xml/{library.path}";
+			Log.Status($"Library {path}");
+			
+			string xml = RawXmls[path];
 			ObjectLibrary.Parse(xml);
 			var trimmed = xml.After(xmlHeader).After("<Objects>").Before("</Objects>", true);
 			sb.AppendLine(trimmed);

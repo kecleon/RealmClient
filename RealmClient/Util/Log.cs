@@ -1,6 +1,7 @@
 ﻿namespace RealmClient.Util;
 
 public static class Log {
+	public static string CurrentStatus = "Initializing";
 	private static FileStream LogFile;
 	private static StreamWriter LogStream;
 
@@ -24,5 +25,9 @@ public static class Log {
 #endif
 
 		LogStream.WriteAsync(message);
+	}
+
+	public static void Status(string message) {
+		CurrentStatus = message;
 	}
 }

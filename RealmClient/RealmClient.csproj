@@ -8,6 +8,7 @@
         <LangVersion>11</LangVersion>
         <ApplicationIcon>wizzy.ico</ApplicationIcon>
         <Company>Kecleon</Company>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

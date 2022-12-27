@@ -17,9 +17,12 @@ public static class Unity {
 
 		//init
 		AssetsManager manager = new();
+		Log.Status("Loading RotMG data folder");
 		manager.LoadFolder(Constants.RealmPath);
 		//read file containers so we can automatically find all xmls and other asset directories ("containers")
+		Log.Status("Reading RotMG data");
 		(NamedObject, string)[] files = ReadContainers(manager);
+		Log.Status("Reading RotMG assets");
 		ReadDataAssets(files);
 		return true;
 	}
@@ -62,10 +65,13 @@ public static class Unity {
 	private static void ReadDataAssets((NamedObject, string)[] files) {
 		foreach ((NamedObject file, string container) in files) {
 			if (file is TextAsset text) {
+				Log.Status($"Parsing text \"{file.m_Name}\"");
 				HandleTextAsset(text, container);
 			} else if (file is Texture2D texture) {
+				Log.Status($"Parsing texture \"{file.m_Name}\"");
 				HandleTextureAsset(texture);
 			} else if (file is AudioClip audio) {
+				Log.Status($"Parsing audio file \"{file.m_Name}\"");
 				HandleAudioAsset(audio, container);
 			}
 		}
@@ -73,8 +79,10 @@ public static class Unity {
 
 	private static void HandleTextAsset(TextAsset text, string container) {
 		if (container.StartsWith("xml/")) {
+			Log.Status($"Xml {container}");
 			XmlData.RawXmls.Add($"{container}/{text.m_Name}", Encoding.Default.GetString(text.m_Script));
 		} else if (text.m_Name == "spritesheet") {
+			Log.Status($"Texture {container}");
 			Textures.SpritesheetJson = Encoding.Default.GetString(text.m_Script);
 		}
 	}

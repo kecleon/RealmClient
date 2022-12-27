@@ -1,7 +1,9 @@
-﻿namespace RealmClient.Render; 
+﻿using System.Numerics;
+using Silk.NET.OpenGL;
+using Silk.NET.Windowing;
+
+namespace RealmClient.Render; 
 
 public abstract class Scene {
-	public void Enter() {
-		
-	}
+	public abstract void Render(GL gl, IWindow window, Vector2 size);
 }
