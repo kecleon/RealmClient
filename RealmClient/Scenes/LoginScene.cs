@@ -27,7 +27,9 @@ public class LoginScene: Scene {
 			ImGui.SetKeyboardFocusHere();
 		}
 
-		var emailEnter = ImGui.InputText("Email: ", EmailInput, (uint)EmailInput.Length, ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.AllowTabInput);
+		var test = ImGui.InputText(Graphics.LabelPrefix("example: "), EmailInput, (uint)EmailInput.Length, ImGuiInputTextFlags.EnterReturnsTrue);
+
+		/*var emailEnter = ImGui.InputText("a", EmailInput, (uint)EmailInput.Length, ImGuiInputTextFlags.EnterReturnsTrue);
 		if (emailEnter) {
 			Focus = 1;
 		}
@@ -36,7 +38,7 @@ public class LoginScene: Scene {
 			ImGui.SetKeyboardFocusHere();
 		}
 
-		var passEnter = ImGui.InputText("Password: ", PasswordInput, (uint)PasswordInput.Length, ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.Password | ImGuiInputTextFlags.AllowTabInput);
+		var passEnter = ImGui.InputText("b", PasswordInput, (uint)PasswordInput.Length, ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.Password);
 
 		ImGui.Checkbox("Steam", ref Steam);
 		if (TriedLogin) {
@@ -55,6 +57,6 @@ public class LoginScene: Scene {
 			} else {
 				TriedLogin = false;
 			}
-		}
+		}*/
 	}
 }

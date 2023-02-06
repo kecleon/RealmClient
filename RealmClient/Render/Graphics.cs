@@ -147,10 +147,28 @@ public static class Graphics {
 		size.Y -= padding * 2;
 		ImGui.SetNextWindowSize(size);
 	}
+	public static void ImGuiMainWindow(Vector2 size, float percent) {
+		//ImGui.SetNextWindowPos(new Vector2(padding, padding));
+		//size.X -= padding * 2;
+		//size.Y -= padding * 2;
+		//ImGui.SetNextWindowSize(size);
+	}
 
 	public static void CenterHorizontal(string text) {
 		var windowWidth = ImGui.GetWindowWidth();
 		var textWidth = ImGui.CalcTextSize(text).X;
 		ImGui.SetCursorPosX((windowWidth - textWidth) * 0.5f);
+	}
+
+	public static string LabelPrefix(string label) {
+		var width = ImGui.CalcItemWidth();
+		var x = ImGui.GetCursorPosX();
+		ImGui.Text(label);
+		ImGui.SameLine();
+		//ImGui.SetCursorPosX(x + width * 0.5f + ImGui.GetStyle().ItemInnerSpacing.X);
+		ImGui.SetCursorPosX(x + width * 0.5f);
+		ImGui.SetNextItemWidth(-1);
+		var labelId = "##" + label;
+		return labelId;
 	}
 }
