@@ -13,7 +13,7 @@ public class Settings : IDisposable {
 	public Settings(string name) {
 		Filename = Path.Combine(Constants.ProfilePath, $"{name}.txt");
 		if (!File.Exists(Filename)) {
-			File.Create(Filename);
+			using var file = File.Create(Filename);
 		}
 
 		LoadSettings();
