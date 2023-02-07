@@ -30,6 +30,7 @@ Provide a better experience than Exalt
 - Load updated client once available
 - Auto dungeon runner
 - New player client setup/tutorial (legit, minimal, blatant, etc)
+- Radial opacity for your player
 
 ## Libraries Used
 [Silk.NET](https://github.com/dotnet/Silk.NET)  
