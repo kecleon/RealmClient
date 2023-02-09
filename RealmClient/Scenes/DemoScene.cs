@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using ImGuiNET;
 using RealmClient.Render;
 using Silk.NET.OpenGL;
@@ -7,6 +7,9 @@ using Silk.NET.Windowing;
 namespace RealmClient.Scenes; 
 
 public class DemoScene : Scene {
+	public override void Start() {
+	}
+
 	public override void Render(GL gl, IWindow window, Vector2 size) {
 		Graphics.ImGuiMainWindow(size, 10);
 		ImGui.Begin("Scene Picker", Graphics.Flags);

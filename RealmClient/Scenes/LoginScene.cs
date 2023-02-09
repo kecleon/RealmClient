@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using System.Text;
 using ImGuiNET;
 using RealmClient.Render;
@@ -14,6 +14,13 @@ public class LoginScene: Scene {
 	private bool TriedLogin = false;
 	private int Focus = 0;
 	private Account Account;
+	public override void Start() {
+		var account = Launcher.Client.Account;
+		if (!string.IsNullOrEmpty(account.Guid) && !string.IsNullOrEmpty(account.Password)) {
+			EmailInput = Encoding.ASCII.GetBytes(account.Guid);
+			PasswordInput = Encoding.ASCII.GetBytes(account.Password);
+		}
+	}
 
 	public override void Render(GL gl, IWindow window, Vector2 size) {
 		Graphics.ImGuiMainWindow(size, 10);

@@ -6,6 +6,9 @@ using Silk.NET.Windowing;
 namespace RealmClient.Scenes; 
 
 public class WorldScene : Scene {
+	public override void Start() {
+	}
+
 	public override void Render(GL gl, IWindow window, Vector2 size) {
 	}
 }
